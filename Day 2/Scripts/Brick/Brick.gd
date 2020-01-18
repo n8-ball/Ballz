@@ -3,9 +3,14 @@ extends KinematicBody2D
 var game
 var hasGame = false
 
+var particles
+
 var sprite
-var shakeAmount = 6
-var shakeReturn = 2
+var shakeDir
+var shakeAmount = 12
+var shakeReturn = 1
+
+var brickColor
 
 var basePos = Vector2(0 , 0)
 var value = 0
@@ -13,6 +18,7 @@ var value = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	sprite = self.find_node("Sprite")
+	particles = self.find_node("Particles")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -32,11 +38,12 @@ func display_value():
 
 func pick_color():
 	if value < 8:
-		sprite.modulate = Color(1.0, 1.0, 1.0 - (value * 0.1))
+		brickColor = Color(1.0, 1.0, 1.0 - (value * 0.1))
 	elif value < 16:
-		sprite.modulate = Color(1.0, 1.0 - ((value - 8) * 0.1), 0.2)
+		brickColor = Color(1.0, 1.0 - ((value - 8) * 0.1), 0.2)
 	else:
-		sprite.modulate = Color(1.0, 0.2, 0.2 + ((value - 16) * 0.1))
+		brickColor = Color(1.0, 0.2, 0.2 + ((value - 16) * 0.1))
+	sprite.modulate = brickColor
 
 func return_sprite():
 	if sprite.position != Vector2(0, 0):
@@ -54,10 +61,18 @@ func set_pos(x, y):
 	basePos = Vector2(x, y)
 
 func delete_self():
+	particles.gravity = shakeDir
+	particles.color = brickColor
+	particles.emitting = true
+	particles.rotation = shakeDir.angle()
+	self.remove_child(particles)
+	self.get_parent().add_child(particles)
+	particles.position = self.global_position
 	self.get_parent().remove_child(self)
 
 func hit(dir):
-	sprite.position = dir.normalized() * shakeAmount
+	shakeDir = dir.normalized()
+	sprite.position = shakeDir * shakeAmount
 	value -= 1
 	return 0
 

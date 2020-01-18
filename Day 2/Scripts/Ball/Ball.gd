@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 var speed = 1
 const normSpeed = 12
-const fastSpeed = 24
+const fastSpeed = 48
 var fastForward = false
 var dir = Vector2(0, -1)
 var landed = false

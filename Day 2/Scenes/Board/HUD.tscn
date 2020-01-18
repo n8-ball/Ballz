@@ -64,9 +64,9 @@ position = Vector2( 0, 403 )
 shape = SubResource( 4 )
 
 [node name="Score" type="RichTextLabel" parent="."]
-margin_left = -200.0
+margin_left = -320.0
 margin_top = -150.0
-margin_right = 200.0
+margin_right = 320.0
 margin_bottom = 200.0
 custom_fonts/normal_font = SubResource( 5 )
 bbcode_enabled = true

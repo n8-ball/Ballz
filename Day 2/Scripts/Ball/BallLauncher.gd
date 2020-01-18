@@ -8,7 +8,7 @@ const SHOOT_STATE = 1
 const WAIT_STATE = 2
 var state = HOLD_STATE
 
-var maxAmmo = 1
+var maxAmmo = 100
 var ammo = 0
 var ballLanded = 0
 var firstLand = false
@@ -50,7 +50,7 @@ func hold_state():
 
 func shoot_state(delta):
 	if fastForward:
-		ballTimer += delta
+		ballTimer += delta*3
 	ballTimer += delta
 	if ballTimer >= ballDelay && ammo > 0:
 		var newBall = ballScene.instance()

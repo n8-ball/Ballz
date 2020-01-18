@@ -5,7 +5,7 @@ signal createRow
 signal moveRow
 signal ballAdd
 
-var score = 1
+var score = 100
 const brickPos = Vector2(542, 110)
 const brickSize = 86
 const boardWidth = 7

@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Brick/Brick.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Brick/Brick.png" type="Texture" id=2]
 [ext_resource path="res://Fonts/Brick/Brick.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Scripts/Brick/ValueDisplay.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/Brick/BrickParticles.gd" type="Script" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 36, 36 )
@@ -32,3 +33,20 @@ script = ExtResource( 4 )
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="Particles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 10
+lifetime = 0.2
+one_shot = true
+explosiveness = 0.6
+randomness = 0.58
+emission_shape = 2
+emission_rect_extents = Vector2( 36, 36 )
+spread = 60.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 750.0
+angular_velocity = 360.0
+angular_velocity_random = 1.0
+scale_amount = 20.0
+script = ExtResource( 5 )
