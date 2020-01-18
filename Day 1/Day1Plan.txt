@@ -1,0 +1,6 @@
+1. Launcher ammo count
+2. Score
+3. Aim + Can't shoot down
+4. Fast forward
+5. Brick Color
+6. Brick Shake
