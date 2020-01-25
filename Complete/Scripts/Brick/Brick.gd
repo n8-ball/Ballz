@@ -4,8 +4,10 @@ var game
 var hasGame = false
 
 var particles
-
 var sprite
+
+var sound = preload("res://Scenes/Brick/HitSound.tscn")
+
 var shakeDir
 var shakeAmount = 12
 var shakeReturn = 1
@@ -15,6 +17,10 @@ var colorSeed
 
 var basePos = Vector2(0 , 0)
 var value = 0
+
+var moveSpeed = 5
+
+
 
 var rng = RandomNumberGenerator.new()
 
@@ -28,7 +34,10 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if hasGame:
-		self.global_position = game.brickPos + Vector2(basePos.x * game.brickSize, basePos.y * game.brickSize)
+		if self.global_position.distance_to(game.brickPos + Vector2(basePos.x * game.brickSize, basePos.y * game.brickSize)) < 1:
+			self.global_position = game.brickPos + Vector2(basePos.x * game.brickSize, basePos.y * game.brickSize)
+		elif self.global_position != basePos:
+			self.global_position += (game.brickPos + Vector2(basePos.x * game.brickSize, basePos.y * game.brickSize) - self.global_position) * moveSpeed * delta
 	display_value()
 	pick_color()
 	return_sprite()
@@ -54,11 +63,14 @@ func return_sprite():
 	if abs(sprite.position.distance_to(Vector2(0, 0))) < shakeReturn:
 		sprite.position = Vector2(0, 0)
 
-func set_game(newGame, multiplier):
+func set_game(newGame, multiplier, x, y):
 	game = newGame
 	hasGame = true
 	value = game.score * multiplier
 	game.connect("moveRow", self, "_on_Game_moveRow")
+	game.connect("restartGame", self, "_on_Game_restartGame")
+	set_pos(x, y)
+	self.global_position = game.brickPos + Vector2(basePos.x * game.brickSize, basePos.y * game.brickSize)
 
 func set_pos(x, y):
 	basePos = Vector2(x, y)
@@ -71,14 +83,17 @@ func delete_self():
 	self.remove_child(particles)
 	self.get_parent().add_child(particles)
 	particles.position = self.global_position
-	self.get_parent().remove_child(self)
+	self.queue_free()
 
 func hit(dir):
 	shakeDir = dir.normalized()
 	sprite.position = shakeDir * shakeAmount
 	value -= 1
+	self.add_child(sound.instance())
 	return 0
 
 func _on_Game_moveRow():
 	basePos.y += 1
-	
+
+func _on_Game_restartGame():
+	self.queue_free()

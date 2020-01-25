@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scenes/Menu/Background.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Fonts/Roboto/Roboto-Black.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Scripts/Menu/Title.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Menu/StartButton.gd" type="Script" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 200
+outline_size = 3
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 60
+use_filter = true
+font_data = ExtResource( 2 )
+
+[node name="Menu" type="Node2D"]
+
+[node name="Background" parent="." instance=ExtResource( 1 )]
+position = Vector2( 800, 450 )
+
+[node name="Title" type="RichTextLabel" parent="."]
+margin_left = 200.0
+margin_top = 150.0
+margin_right = 1400.0
+margin_bottom = 400.0
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center] [color=#ff0000]B[color=#ffff00]a[color=#00ff00]l[color=#0000ff]l[color=#aa00ff]z [/center"
+text = " Ballz [/center"
+script = ExtResource( 3 )
+
+[node name="Button" type="Button" parent="."]
+margin_left = 650.0
+margin_top = 500.0
+margin_right = 950.0
+margin_bottom = 600.0
+custom_fonts/font = SubResource( 2 )
+text = "Start"
+script = ExtResource( 4 )

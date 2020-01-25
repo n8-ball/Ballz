@@ -5,7 +5,9 @@ signal createRow
 signal moveRow
 signal ballAdd
 
-var score = 40
+signal restartGame
+
+var score = 1
 const brickPos = Vector2(542, 110)
 const brickSize = 86
 const boardWidth = 7
@@ -15,6 +17,8 @@ var launcherChild
 
 var moveTime = 1
 var moveTimer = 0
+
+var gameOver = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -31,11 +35,15 @@ func add_collector(collector):
 	collector.connect("ballAdd", self, "_on_BallCollect_BallAdd")
 
 func end_game():
-	self.get_tree().quit()
+	score = 0
+	emit_signal("restartGame")
 
 func _on_Launcher_LauncherReady():
 	score += 1
-	emit_signal("createRow")
+	if score == 1:
+		emit_signal("createFirstRow")
+	else:
+		emit_signal("createRow")
 	emit_signal("moveRow")
 
 func _on_BallCollect_BallAdd():
