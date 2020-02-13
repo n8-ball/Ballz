@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Yay.wav-9b7e77e7f613a0abe3f3f34cf18fe756.sample"
+
+[deps]
+
+source_file="res://Sounds/Yay.wav"
+dest_files=[ "res://.import/Yay.wav-9b7e77e7f613a0abe3f3f34cf18fe756.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

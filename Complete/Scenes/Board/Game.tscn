@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Board/Game.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Board/HUD.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Board/RowCreator.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Ball/BallLauncher.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/Board/GameOver.gd" type="Script" id=5]
+[ext_resource path="res://Sounds/CharlestonL3.wav" type="AudioStream" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 290, 10 )
@@ -28,3 +29,8 @@ script = ExtResource( 5 )
 [node name="Shape" type="CollisionShape2D" parent="GameOver"]
 position = Vector2( 800, 820 )
 shape = SubResource( 1 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -10.097
+autoplay = true

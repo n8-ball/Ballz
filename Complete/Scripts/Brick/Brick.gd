@@ -82,6 +82,7 @@ func delete_self():
 	particles.rotation = shakeDir.angle()
 	self.remove_child(particles)
 	self.get_parent().add_child(particles)
+	self.get_parent().find_node("Yay").play(0)
 	particles.position = self.global_position
 	self.queue_free()
 
@@ -89,7 +90,7 @@ func hit(dir):
 	shakeDir = dir.normalized()
 	sprite.position = shakeDir * shakeAmount
 	value -= 1
-	self.add_child(sound.instance())
+	self.get_parent().add_child(sound.instance())
 	return 0
 
 func _on_Game_moveRow():
