@@ -20,8 +20,6 @@ var value = 0
 
 var moveSpeed = 5
 
-
-
 var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
@@ -33,16 +31,19 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	control_position(delta)
+	control_value()
+	pick_color()
+	return_sprite()
+
+func control_position(delta):
 	if hasGame:
 		if self.global_position.distance_to(game.brickPos + Vector2(basePos.x * game.brickSize, basePos.y * game.brickSize)) < 1:
 			self.global_position = game.brickPos + Vector2(basePos.x * game.brickSize, basePos.y * game.brickSize)
 		elif self.global_position != basePos:
 			self.global_position += (game.brickPos + Vector2(basePos.x * game.brickSize, basePos.y * game.brickSize) - self.global_position) * moveSpeed * delta
-	display_value()
-	pick_color()
-	return_sprite()
 
-func display_value():
+func control_value():
 	if value <= 0 && !hasGame:
 		self.visible = false
 	elif value <= 0:
@@ -63,18 +64,6 @@ func return_sprite():
 	if abs(sprite.position.distance_to(Vector2(0, 0))) < shakeReturn:
 		sprite.position = Vector2(0, 0)
 
-func set_game(newGame, multiplier, x, y):
-	game = newGame
-	hasGame = true
-	value = game.score * multiplier
-	game.connect("moveRow", self, "_on_Game_moveRow")
-	game.connect("restartGame", self, "_on_Game_restartGame")
-	set_pos(x, y)
-	self.global_position = game.brickPos + Vector2(basePos.x * game.brickSize, basePos.y * game.brickSize)
-
-func set_pos(x, y):
-	basePos = Vector2(x, y)
-
 func delete_self():
 	particles.gravity = shakeDir
 	particles.color = brickColor
@@ -92,6 +81,19 @@ func hit(dir):
 	value -= 1
 	self.get_parent().add_child(sound.instance())
 	return 0
+
+#Do not change any functions below this point
+func set_pos(x, y):
+	basePos = Vector2(x, y)
+
+func set_game(newGame, multiplier, x, y):
+	game = newGame
+	hasGame = true
+	value = game.score * multiplier
+	game.connect("moveRow", self, "_on_Game_moveRow")
+	game.connect("restartGame", self, "_on_Game_restartGame")
+	set_pos(x, y)
+	self.global_position = game.brickPos + Vector2(basePos.x * game.brickSize, basePos.y * game.brickSize)
 
 func _on_Game_moveRow():
 	basePos.y += 1
